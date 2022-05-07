@@ -1,4 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class GitService {}
+export class GitService {
+  gitHistory() {
+    return 'git history';
+  }
+}
