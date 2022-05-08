@@ -1,5 +1,5 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class GitService {
@@ -11,6 +11,7 @@ export class GitService {
     return this.httpService
       .get(`https://api.github.com/users/${params.username}`)
       .pipe(
+        // tap(data => console.log('data: ', data)),
         map((response) => ({
           name: response.data.name,
           url: response.data.url,
@@ -18,15 +19,16 @@ export class GitService {
           created_at: response.data.created_at,
           updated_at: response.data.updated_at,
         })),
-      );
+      )
   }
 
   getCommitsInformation(params) {
     // console.log('params :>> ', params);
 
     return this.httpService
-      .get(`https://api.github.com/repos/${params.username}/${params.repository}/commits`)
+      .get(`https://api.github.com/repos/${params.username}/${params.repository}/commits/?page=1`)
       .pipe(
+        tap(data => console.log('data.data[0]: ', data.data[0])),
         map((response) => ({
           author: response.data[0].commit.author,
           message: response.data[0].commit.message,
