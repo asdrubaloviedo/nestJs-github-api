@@ -5,11 +5,11 @@ import { map } from 'rxjs/operators';
 export class GitService {
   constructor(private httpService: HttpService) {}
 
-  getGitInformation(params) {
-    console.log('params :>> ', params);
+  async getGitInformation(params) {
+    // console.log('params :>> ', params);
 
     return this.httpService
-      .get('https://api.github.com/users/' + params.username)
+      .get(`https://api.github.com/users/${params.username}`)
       .pipe(
         map((response) => response.data),
         map((data) => ({
@@ -18,6 +18,23 @@ export class GitService {
           public_repos: data.public_repos,
           created_at: data.created_at,
           updated_at: data.updated_at,
+        })),
+      );
+  }
+
+  getCommitsInformation(params) {
+    console.log('params :>> ', params);
+
+    return this.httpService
+      .get(`https://api.github.com/repos/${params.username}/${params.repository}/commits`)
+      .pipe(
+        map((response, index) => {
+          console.log('index :>> ', index);
+          console.log('response.data :>> ', response.data[0].commit.author);
+          response.data[0].commit.author;
+        }),
+        map((data) => ({
+          data: data,
         })),
       );
   }

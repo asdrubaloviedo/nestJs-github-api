@@ -10,6 +10,11 @@ export class GitController {
     return this.gitService.getGitInformation(params);
   }
 
+  @Get(':username/:repository')
+  commitsInformation(@Param() params) {
+    return this.gitService.getCommitsInformation(params);
+  }
+
   @Get('history')
   gitHistory() {
     return {
