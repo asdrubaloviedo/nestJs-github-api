@@ -3,5 +3,5 @@ Instructions:
     2.- Make sure you have install NestJs using de command  "npm i -g @nestjs/cli".
     3.- Go to the github repository "https://github.com/asdrubaloviedo/nestJs-github-api" and clone it using the 
     "git clone git@github.com:asdrubaloviedo/nestJs-github-api.git" command.
-    4.- Go to the root of the nestJs-github-api folder and install all the packages using the "npm install" command.
+    4.- Go to the root of the nestJs-github-api folder and install all the packages using the "npm install" command.cd
     5.- Run the app using the "npm run start:dev" command. 
