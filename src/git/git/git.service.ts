@@ -12,7 +12,7 @@ export class GitService {
       .get(`https://api.github.com/users/${params.username}`)
       .pipe(
         map((response) => ({
-          login: response.data.login,
+          name: response.data.name,
           url: response.data.url,
           public_repos: response.data.public_repos,
           created_at: response.data.created_at,
