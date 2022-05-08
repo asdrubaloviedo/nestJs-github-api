@@ -11,15 +11,7 @@ export class GitController {
   }
 
   @Get(':username/:repository')
-  commitsInformation(@Param() params) {
-    return this.gitService.getCommitsInformation(params);
-  }
-
-  @Get('history')
-  gitHistory() {
-    return {
-      success: true,
-      data: this.gitService.gitHistory(),
-    };
+  getGitHistory(@Param() params) {
+    return this.gitService.getGitHistory(params);
   }
 }

@@ -1,17 +1,14 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class GitService {
   constructor(private httpService: HttpService) {}
 
   async getGitInformation(params) {
-    // console.log('params :>> ', params);
-
     return this.httpService
       .get(`https://api.github.com/users/${params.username}`)
       .pipe(
-        // tap(data => console.log('data: ', data)),
         map((response) => ({
           name: response.data.name,
           url: response.data.url,
@@ -22,22 +19,22 @@ export class GitService {
       )
   }
 
-  getCommitsInformation(params) {
-    // console.log('params :>> ', params);
-
+  getGitHistory(params) {
     return this.httpService
-      .get(`https://api.github.com/repos/${params.username}/${params.repository}/commits/?page=1`)
+      .get(`https://api.github.com/repos/${params.username}/${params.repository}/commits`)
       .pipe(
-        tap(data => console.log('data.data[0]: ', data.data[0])),
-        map((response) => ({
-          author: response.data[0].commit.author,
-          message: response.data[0].commit.message,
-          url: response.data[0].commit.url,
-        })),
+        map((response) => 
+            {
+                const commit = response.data.map((element) => {
+                    return {
+                        author: element.commit.author.name,
+                        date: element.commit.author.date,
+                        message: element.commit.message,
+                    }
+                });
+                return commit;
+            }
+        ),
       );
-  }
-
-  gitHistory() {
-    return 'git history';
   }
 }
